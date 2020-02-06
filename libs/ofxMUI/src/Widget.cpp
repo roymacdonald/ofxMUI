@@ -20,6 +20,15 @@ Widget::Widget(float x, float y, float width, float height):
 {
 }
 
+Widget::Widget(const std::string& id, const ofRectangle& rect):
+    Widget(id, rect.x, rect.y, rect.width, rect.height)
+{
+}
+Widget::Widget(const ofRectangle& rect):
+    Widget("", rect.x, rect.y, rect.width, rect.height)
+{
+}
+
 
 Widget::Widget(const std::string& id, float x, float y, float width, float height):
     DOM::Element(id, x, y, width, height)
@@ -61,6 +70,12 @@ void Widget::onDraw() const
     ofPushStyle();
     ofFill();
 
+	if(_drawMode == ShapeDrawMode::ELLIPSE){
+		// Translate for circle center.
+		  ofPushMatrix();
+		  ofTranslate(getWidth() / 2, getHeight() / 2);
+	}
+	
     auto styles = getStyles();
 
     if (isPointerDown())
@@ -76,7 +91,7 @@ void Widget::onDraw() const
         ofSetColor(styles->getColor(Styles::ROLE_BACKGROUND, Styles::STATE_NORMAL));
     }
 
-    ofDrawRectangle(0, 0, getWidth(), getHeight());
+    drawShape(0, 0, getWidth(), getHeight());
 
     ofNoFill();
 
@@ -93,7 +108,7 @@ void Widget::onDraw() const
         ofSetColor(styles->getColor(Styles::ROLE_BORDER, Styles::STATE_NORMAL));
     }
 
-    ofDrawRectangle(0, 0, getWidth(), getHeight());
+    drawShape(0, 0, getWidth(), getHeight());
     ofPopStyle();
 
     if (isFocused())
@@ -102,12 +117,20 @@ void Widget::onDraw() const
         ofNoFill();
         ofSetColor(255, 255, 0, 200);
         int offset = 1;
-        ofDrawRectangle(-offset,
+        drawShape(-offset,
                         -offset,
                         getWidth() + offset * 2,
                         getHeight() + offset * 2);
         ofPopStyle();
     }
+	if(_drawMode == ShapeDrawMode::ELLIPSE){
+		ofPopMatrix();
+	}
+#ifdef OFX_MUI_WIDGET_DEBUG
+	if(!debugString.empty()){
+		ofDrawBitmapStringHighlight(debugString, getX()+ 10, getY() + 24);
+	}
+#endif
 }
 
 
@@ -238,13 +261,29 @@ void Widget::_onPointerCaptureEvent(DOM::PointerCaptureUIEventArgs& e)
         }
 
         _isDragging = _isDraggable;
-
+		
     }
     else if (e.type() == PointerEventArgs::LOST_POINTER_CAPTURE)
     {
         _isDragging = false;
     }
 }
+void Widget::drawShape(float x, float y, float width, float height, float radius)const{
+	if(_drawMode == ShapeDrawMode::ELLIPSE){
+		ofDrawEllipse(x, y, width, height);
+	}else if(_drawMode == ShapeDrawMode::RECTANGLE){
+		ofDrawRectangle(x, y, width, height);
+	}else if(_drawMode == ShapeDrawMode::ROUNDED_RECTANGLE){
+		ofDrawRectRounded(x, y, width, height, radius);
+	}
+}
 
+void Widget::setShapeDrawMode(ShapeDrawMode drawMode){
+		_drawMode = drawMode;
+}
+
+ShapeDrawMode Widget::getShapeDrawMode() const{
+		return _drawMode;
+}
 
 } } // namespace ofx::MUI

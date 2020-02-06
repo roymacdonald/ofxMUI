@@ -47,6 +47,16 @@ public:
            float height = DEFAULT_HEIGHT,
            DOM::Orientation orientation = DOM::Orientation::DEFAULT,
            DragMode mode = DragMode::ABSOLUTE);
+	
+	/// \brief Create a Slider with the given parameters.
+    /// \param id The Widget's id string.
+    /// \param rect the rectangle that defines the position in parent coordinates, width and height
+    /// \param orientation The orientation of the Slider.
+    /// \param mode The DragMode of the Slider.
+    Slider(const std::string& id,
+           const ofRectangle& rect,
+           DOM::Orientation orientation = DOM::Orientation::DEFAULT,
+           DragMode mode = DragMode::ABSOLUTE);
 
     /// \brief Destroy the Slider.
     virtual ~Slider();
@@ -231,7 +241,7 @@ Slider<Type>::Slider(const std::string& id,
            0,
            defaultWidthForOrientation(orientation),
            defaultHeightForOrientation(orientation),
-           orientation)
+           orientation, mode)
 {
 }
 
@@ -262,6 +272,16 @@ Slider<Type>::Slider(const std::string& id,
 
 	setImplicitPointerCapture(true);
 }
+
+
+template <typename Type>
+Slider<Type>::Slider(const std::string& id,
+					 const ofRectangle& rect,
+					 DOM::Orientation orientation,
+					 DragMode mode):Slider(id, rect.x, rect.y, rect.width, rect.height, orientation, mode){
+	
+}
+
 
 
 template <typename Type>

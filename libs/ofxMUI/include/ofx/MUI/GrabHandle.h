@@ -9,7 +9,7 @@
 	
 
 #include "ofx/MUI/Widget.h"
-
+#include "ofx/MUI/Types.h"
 
 namespace ofx {
 namespace MUI {
@@ -18,11 +18,13 @@ namespace MUI {
 class GrabHandle: public Widget
 {
 public:
+	
     GrabHandle(float x, float y, float radius);
     GrabHandle(float x, float y, float width, float height);
     GrabHandle(const std::string& id, float x, float y, float radius);
     GrabHandle(const std::string& id, float x, float y, float width, float height);
-
+    GrabHandle(const std::string& id, const ofRectangle& rect);
+	
     /// \brief Destroy the GrabHandle.
     virtual ~GrabHandle();
 

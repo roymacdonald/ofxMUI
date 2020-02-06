@@ -54,6 +54,19 @@ enum class DragMode
 
 
 
+enum class ShapeDrawMode
+{
+	/// \brief Draws an element with an ellipse bounded by its rectangle
+	ELLIPSE,
+	/// \brief Draws an element as a rectangle
+	RECTANGLE,
+	/// \brief Draws an element as a rectangle with rounded corners
+	ROUNDED_RECTANGLE
+};
+
+
+
+
 //public class AbstractMap
 
 

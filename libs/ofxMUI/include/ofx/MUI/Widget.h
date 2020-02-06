@@ -12,7 +12,9 @@
 #include "ofGraphics.h"
 #include "ofx/DOM/Element.h"
 #include "ofx/DOM/Events.h"
+#include "ofx/MUI/Types.h"
 
+#define OFX_MUI_WIDGET_DEBUG
 
 namespace ofx {
 namespace MUI {
@@ -25,8 +27,9 @@ class Styles;
 class Widget: public DOM::Element
 {
 public:
-    Widget(float x, float y, float width, float height);
-
+	Widget(const ofRectangle& rect);
+	Widget(const std::string& id, const ofRectangle& rect);
+	Widget(float x, float y, float width, float height);
     Widget(const std::string& id, float x, float y, float width, float height);
 
     /// \brief Destroy this Widget.
@@ -78,13 +81,28 @@ public:
     ///
     /// \param style The style to set.
     void setStyles(std::shared_ptr<Styles> styles);
-
+	
+	
+	/// \brief sets the way this widget's shape is going to be drawn
+	/// \param drawMode  the draw mode to set (ELLIPSE, RECTANGLE or ROUNDED_RECTANGLE). RECTANGLE by default
+	void setShapeDrawMode(ShapeDrawMode drawMode);
+	
+	/// \brief Gets the way this widget's shape is going to be drawn
+    /// \returns the Widget's draw mode.
+	ShapeDrawMode getShapeDrawMode() const;
+	
+	
+	#ifdef OFX_MUI_WIDGET_DEBUG
+		void setDebugString(const std::string& str){
+			debugString = str;
+		}
+	#endif
 protected:
     /// \brief Default callback for built-in events, including dragging.
-    void _onPointerEvent(DOM::PointerUIEventArgs& e);
+    virtual void _onPointerEvent(DOM::PointerUIEventArgs& e);
 
     /// \brief Default callback for built-in events, including dragging.
-    void _onPointerCaptureEvent(DOM::PointerCaptureUIEventArgs& e);
+    virtual void _onPointerCaptureEvent(DOM::PointerCaptureUIEventArgs& e);
 
     /// \brief True iff the Widget is a target for dragged Widgets.
     bool _isDropTarget = false;
@@ -107,10 +125,27 @@ protected:
     /// \brief A map of callbacks key-down events.
     std::map<uint64_t, std::function<void(DOM::KeyboardUIEventArgs& event)>> _keyboardListeners;
 
+	
+	/// \brief the the way the shape is going to be drawn (ELLIPSE, RECTANGLE or ROUNDED_RECTANGLE)
+	ShapeDrawMode _drawMode = ShapeDrawMode::RECTANGLE;
+	
+	
+	/// \b brief Helper function that will draw according to the widget's current shape draw mode;
+	void drawShape(float x, float y, float width, float height, float cornerRadius = 5) const;
+	
+
+
+	
 private:
     /// \brief The shared Styles.
     mutable std::shared_ptr<Styles> _styles = nullptr;
 
+	#ifdef OFX_MUI_WIDGET_DEBUG
+		std::string debugString;
+//		mutable bool bDrawDebugString = false;
+	#endif
+
+	
 };
 
 
