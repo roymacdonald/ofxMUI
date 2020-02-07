@@ -215,6 +215,12 @@ void Widget::setStyles(std::shared_ptr<Styles> styles)
 }
 
 
+
+void Widget::_onDragging(const DOM::CapturedPointer& pointer)
+{
+	setPosition(screenToParent(pointer.position() - pointer.offset()));
+}
+
 void Widget::_onPointerEvent(DOM::PointerUIEventArgs& e)
 {
     if (e.type() == PointerEventArgs::POINTER_DOWN)
@@ -226,8 +232,7 @@ void Widget::_onPointerEvent(DOM::PointerUIEventArgs& e)
         {
             if (!capturedPointers().empty())
             {
-                const DOM::CapturedPointer& pointer = *capturedPointers().begin();
-                setPosition(screenToParent(pointer.position() - pointer.offset()));
+				this->_onDragging(*capturedPointers().begin());
             }
             else
             {
@@ -249,7 +254,12 @@ void Widget::_onPointerEvent(DOM::PointerUIEventArgs& e)
         // unhandled.
     }
 }
-
+void Widget::_setIsDragging(bool bDragging){
+	if(_isDragging != bDragging){
+		_isDragging = bDragging;
+		ofNotifyEvent(isDraggingEvent, _isDragging, this);
+	}
+}
 
 void Widget::_onPointerCaptureEvent(DOM::PointerCaptureUIEventArgs& e)
 {
@@ -259,13 +269,13 @@ void Widget::_onPointerCaptureEvent(DOM::PointerCaptureUIEventArgs& e)
         {
             moveToFront();
         }
-
-        _isDragging = _isDraggable;
+		
+        _setIsDragging(_isDraggable);
 		
     }
     else if (e.type() == PointerEventArgs::LOST_POINTER_CAPTURE)
     {
-        _isDragging = false;
+        _setIsDragging(false);
     }
 }
 void Widget::drawShape(float x, float y, float width, float height, float radius)const{

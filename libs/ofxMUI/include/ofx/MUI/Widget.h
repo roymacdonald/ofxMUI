@@ -97,7 +97,12 @@ public:
 			debugString = str;
 		}
 	#endif
+	///\brief This event gets triggered whenever the dragging state changes. 
+	ofEvent<bool> isDraggingEvent;
 protected:
+	///\brief Callback when dragging happens. override to change behavior
+	virtual void _onDragging(const DOM::CapturedPointer& pointer);
+	
     /// \brief Default callback for built-in events, including dragging.
     virtual void _onPointerEvent(DOM::PointerUIEventArgs& e);
 
@@ -111,8 +116,10 @@ protected:
     bool _isDraggable = false;
 
     /// \brief True iff the widget is currently being dragged.
-    bool _isDragging = false;
+//	ofParameter<bool> _isDragging = {"isDragging",false};
+	bool _isDragging = false;
 
+	void _setIsDragging(bool bDragging);
     /// \brief True iff the pointer is over the widget.
     bool _isPointerOver = false;
 
