@@ -296,4 +296,13 @@ ShapeDrawMode Widget::getShapeDrawMode() const{
 		return _drawMode;
 }
 
+void Widget::setMoveToFrontOnCapture(bool moveToFront){
+	_moveToFrontOnCapture = moveToFront;
+}
+
+bool Widget::isMoveToFrontOnCapture(){
+	return _moveToFrontOnCapture;
+}
+
+
 } } // namespace ofx::MUI

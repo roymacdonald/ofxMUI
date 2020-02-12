@@ -99,6 +99,17 @@ public:
 	#endif
 	///\brief This event gets triggered whenever the dragging state changes. 
 	ofEvent<bool> isDraggingEvent;
+	
+	///\brief If enabled when a pointer is captured (clicked over) will move to the front of the stack, thus drawing on top of all of its siblings.
+	///Othewise stay where it is.
+	/// default is true.
+	void setMoveToFrontOnCapture(bool moveToFront);
+
+	
+	///\brief returns werther or not it will move to the front when this widgets captures a pointer
+	bool isMoveToFrontOnCapture();
+	
+	
 protected:
 	///\brief Callback when dragging happens. override to change behavior
 	virtual void _onDragging(const DOM::CapturedPointer& pointer);
