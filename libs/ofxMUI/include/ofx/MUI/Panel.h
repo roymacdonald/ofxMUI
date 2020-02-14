@@ -15,19 +15,6 @@ namespace ofx {
 namespace MUI {
 
 
-//    addEventListener(gotPointerCapture, &Widget::_onPointerCaptureEvent, false, std::numeric_limits<int>::lowest());
-//    addEventListener(lostPointerCapture, &Widget::_onPointerCaptureEvent, false, std::numeric_limits<int>::lowest());
-//
-//    setImplicitPointerCapture(true);
-//}
-//
-//
-//    Widget::~Widget()
-//    {
-//        removeEventListener(pointerMove, &Widget::_onPointerEvent, false, std::numeric_limits<int>::lowest());
-//        removeEventListener(pointerDown, &Widget::_onPointerEvent, false, std::numeric_limits<int>::lowest());
-
-
 class Panel: public Widget
 {
 public:

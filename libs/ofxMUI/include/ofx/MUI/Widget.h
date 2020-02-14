@@ -110,6 +110,13 @@ public:
 	bool isMoveToFrontOnCapture();
 	
 	
+	/// \brief Enable or disable highlighting while pointer is over.
+    /// \param bHighlight True to enable, false otherwise
+	void setHighlightOnOver(bool bHighlight);
+	
+	///\brief returns true if will highlight when the position pointer is over
+	bool isHighlightingOnOver();
+	
 protected:
 	///\brief Callback when dragging happens. override to change behavior
 	virtual void _onDragging(const DOM::CapturedPointer& pointer);
@@ -148,10 +155,12 @@ protected:
 	ShapeDrawMode _drawMode = ShapeDrawMode::RECTANGLE;
 	
 	
-	/// \b brief Helper function that will draw according to the widget's current shape draw mode;
+	/// \ brief Helper function that will draw according to the widget's current shape draw mode;
 	void drawShape(float x, float y, float width, float height, float cornerRadius = 5) const;
 	
 
+	///\ brief Highlihgt the widget when the pointer is over.
+	bool _HighlightOnOver = true;
 
 	
 private:

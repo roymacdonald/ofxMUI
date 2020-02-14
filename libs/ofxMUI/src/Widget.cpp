@@ -82,7 +82,7 @@ void Widget::onDraw() const
     {
         ofSetColor(styles->getColor(Styles::ROLE_BACKGROUND, Styles::STATE_DOWN));
     }
-    else if (isPointerOver())
+    else if (isPointerOver() && _HighlightOnOver)
     {
         ofSetColor(styles->getColor(Styles::ROLE_BACKGROUND, Styles::STATE_OVER));
     }
@@ -99,7 +99,7 @@ void Widget::onDraw() const
     {
         ofSetColor(styles->getColor(Styles::ROLE_BORDER, Styles::STATE_DOWN));
     }
-    else if (isPointerOver())
+    else if (isPointerOver() && _HighlightOnOver)
     {
         ofSetColor(styles->getColor(Styles::ROLE_BORDER, Styles::STATE_OVER));
     }
@@ -303,6 +303,14 @@ void Widget::setMoveToFrontOnCapture(bool moveToFront){
 bool Widget::isMoveToFrontOnCapture(){
 	return _moveToFrontOnCapture;
 }
+
+void Widget::setHighlightOnOver(bool bHighlight){
+	_HighlightOnOver = bHighlight;
+}
+
+bool Widget::isHighlightingOnOver(){
+	return _HighlightOnOver;
+};
 
 
 } } // namespace ofx::MUI
