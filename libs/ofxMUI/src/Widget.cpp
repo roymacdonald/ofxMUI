@@ -82,7 +82,7 @@ void Widget::onDraw() const
     {
         ofSetColor(styles->getColor(Styles::ROLE_BACKGROUND, Styles::STATE_DOWN));
     }
-    else if (isPointerOver() && _HighlightOnOver)
+    else if (isPointerOver() && _highlightOnOver)
     {
         ofSetColor(styles->getColor(Styles::ROLE_BACKGROUND, Styles::STATE_OVER));
     }
@@ -99,7 +99,7 @@ void Widget::onDraw() const
     {
         ofSetColor(styles->getColor(Styles::ROLE_BORDER, Styles::STATE_DOWN));
     }
-    else if (isPointerOver() && _HighlightOnOver)
+    else if (isPointerOver() && _highlightOnOver)
     {
         ofSetColor(styles->getColor(Styles::ROLE_BORDER, Styles::STATE_OVER));
     }
@@ -255,6 +255,10 @@ void Widget::_onPointerEvent(DOM::PointerUIEventArgs& e)
     }
 }
 void Widget::_setIsDragging(bool bDragging){
+	if(!_isDraggable){
+		_isDragging = false;//just make sure this is always false
+		return;
+	}
 	if(_isDragging != bDragging){
 		_isDragging = bDragging;
 		ofNotifyEvent(isDraggingEvent, _isDragging, this);
@@ -270,7 +274,7 @@ void Widget::_onPointerCaptureEvent(DOM::PointerCaptureUIEventArgs& e)
             moveToFront();
         }
 		
-        _setIsDragging(_isDraggable);
+        _setIsDragging(true);
 		
     }
     else if (e.type() == PointerEventArgs::LOST_POINTER_CAPTURE)
@@ -305,11 +309,11 @@ bool Widget::isMoveToFrontOnCapture(){
 }
 
 void Widget::setHighlightOnOver(bool bHighlight){
-	_HighlightOnOver = bHighlight;
+	_highlightOnOver = bHighlight;
 }
 
 bool Widget::isHighlightingOnOver(){
-	return _HighlightOnOver;
+	return _highlightOnOver;
 };
 
 

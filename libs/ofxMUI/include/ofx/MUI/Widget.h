@@ -160,7 +160,7 @@ protected:
 	
 
 	///\ brief Highlihgt the widget when the pointer is over.
-	bool _HighlightOnOver = true;
+	bool _highlightOnOver = true;
 
 	
 private:
