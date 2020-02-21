@@ -163,6 +163,15 @@ public:
     /// \param state The State desired.
     void setColor(const ofColor& color, Role role, State state);
 
+    /// \brief Set all the ofColor s for a given Role, using the default states
+	/// each state will get the same color but with different opacity.
+    /// \param color The color to set.
+    /// \param role The Role desired.
+	
+    void setColor(const ofColor& color, Role role);
+
+	
+	
     /// \brief Get the font for a given FontSize.
     /// \param size The font size to get.
     /// \returns a reference to the requested font.

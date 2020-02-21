@@ -112,7 +112,12 @@ Styles::Styles()
     ofColor foreground = ofColor::fromHex(0x3E606F); // foreground
     ofColor background = ofColor::fromHex(0x193441); // background
 
+	_colors.assign(ROLE_TEXT + 1, std::vector<ofColor>(STATE_DISABLED + 1, ofColor()));
+
     setColors(foreground, background, accent, border, text);
+	
+	
+	
 }
 
 
@@ -131,6 +136,25 @@ void Styles::setColor(const ofColor& color, Role role, State state)
 	_colors[role][state] = color;
 }
 
+void Styles::setColor(const ofColor& color, Role role)
+{
+//    std::vector<ofColor> new_colors(STATE_DISABLED + 1, ofColor());
+
+	if(role == ROLE_FOREGROUND || role == ROLE_BACKGROUND){
+	
+		_colors[role][STATE_NORMAL] = ofColor(color, 127);
+		_colors[role][STATE_OVER] = ofColor(color, 180);
+		_colors[role][STATE_DOWN] = ofColor(color, 255);
+	}else
+	{
+		_colors[role][STATE_NORMAL] = color;
+		_colors[role][STATE_OVER] = color;
+		_colors[role][STATE_DOWN] = color;
+	}
+    _colors[role][STATE_DISABLED] = ofColor(color, 20);
+
+	
+}
 
 
 void Styles::setColors(const ofColor& foreground,
@@ -139,48 +163,48 @@ void Styles::setColors(const ofColor& foreground,
                        const ofColor& border,
                        const ofColor& text)
 {
-    std::vector<ofColor> _foreground(STATE_DISABLED + 1, ofColor());
+//    std::vector<ofColor> _foreground(STATE_DISABLED + 1, ofColor());
+//
+//    _foreground[STATE_NORMAL] = ofColor(foreground, 127);
+//    _foreground[STATE_OVER] = ofColor(foreground, 180);
+//    _foreground[STATE_DOWN] = ofColor(foreground, 255);
+//    _foreground[STATE_DISABLED] = ofColor(foreground, 20);
+//
+//    std::vector<ofColor> _background(STATE_DISABLED + 1, ofColor());
+//
+//    _background[STATE_NORMAL] = ofColor(background, 127);
+//    _background[STATE_OVER] = ofColor(background, 180);
+//    _background[STATE_DOWN] = ofColor(background, 255);
+//    _background[STATE_DISABLED] = ofColor(background, 20);
+//
+//    std::vector<ofColor> _accent(STATE_DISABLED + 1, ofColor());
+//
+//    _accent[STATE_NORMAL] = accent;
+//    _accent[STATE_OVER] = accent;
+//    _accent[STATE_DOWN] = accent;
+//    _accent[STATE_DISABLED] = ofColor(accent, 20);
+//
+//    std::vector<ofColor> _border(STATE_DISABLED + 1, ofColor());
+//
+//    _border[STATE_NORMAL] = border;
+//    _border[STATE_OVER] = border;
+//    _border[STATE_DOWN] = border;
+//    _border[STATE_DISABLED] = ofColor(border, 20);
+//
+//    std::vector<ofColor> _text(STATE_DISABLED + 1, ofColor());
+//
+//    _text[STATE_NORMAL] = text;
+//    _text[STATE_OVER] = text;
+//    _text[STATE_DOWN] = text;
+//    _text[STATE_DISABLED] = ofColor(text, 20);
+//
+//    _colors.assign(ROLE_TEXT + 1, std::vector<ofColor>());
 
-    _foreground[STATE_NORMAL] = ofColor(foreground, 127);
-    _foreground[STATE_OVER] = ofColor(foreground, 180);
-    _foreground[STATE_DOWN] = ofColor(foreground, 255);
-    _foreground[STATE_DISABLED] = ofColor(foreground, 20);
-
-    std::vector<ofColor> _background(STATE_DISABLED + 1, ofColor());
-
-    _background[STATE_NORMAL] = ofColor(background, 127);
-    _background[STATE_OVER] = ofColor(background, 180);
-    _background[STATE_DOWN] = ofColor(background, 255);
-    _background[STATE_DISABLED] = ofColor(background, 20);
-
-    std::vector<ofColor> _accent(STATE_DISABLED + 1, ofColor());
-
-    _accent[STATE_NORMAL] = accent;
-    _accent[STATE_OVER] = accent;
-    _accent[STATE_DOWN] = accent;
-    _accent[STATE_DISABLED] = ofColor(accent, 20);
-
-    std::vector<ofColor> _border(STATE_DISABLED + 1, ofColor());
-
-    _border[STATE_NORMAL] = border;
-    _border[STATE_OVER] = border;
-    _border[STATE_DOWN] = border;
-    _border[STATE_DISABLED] = ofColor(border, 20);
-
-    std::vector<ofColor> _text(STATE_DISABLED + 1, ofColor());
-
-    _text[STATE_NORMAL] = text;
-    _text[STATE_OVER] = text;
-    _text[STATE_DOWN] = text;
-    _text[STATE_DISABLED] = ofColor(text, 20);
-
-    _colors.assign(ROLE_TEXT + 1, std::vector<ofColor>());
-
-    _colors[ROLE_FOREGROUND] = _foreground;
-    _colors[ROLE_BACKGROUND] = _background;
-    _colors[ROLE_ACCENT] = _accent;
-    _colors[ROLE_BORDER] = _border;
-    _colors[ROLE_TEXT] = _text;
+    setColor(foreground, ROLE_FOREGROUND);
+    setColor(background, ROLE_BACKGROUND);
+    setColor(accent, ROLE_ACCENT);
+    setColor(border, ROLE_BORDER);
+    setColor(text, ROLE_TEXT);
 }
 
 const ofTrueTypeFont& Styles::getFont(FontSize size) const
