@@ -10,7 +10,11 @@
 
 #include "ofx/MUI/Widget.h"
 #include "ofx/MUI/Styles.h"
-
+#ifdef USE_OFX_FONTSTASH2
+#include "ofxFontStash.h"
+#else
+#include "ofTrueTypeFont.h"
+#endif
 
 namespace ofx {
 namespace MUI {
@@ -31,20 +35,6 @@ public:
     };
 //    typedef NSUInteger NSLineBreakMode
 
-
-//    enum ofAlignVert {
-//        OF_ALIGN_VERT_IGNORE   = 0x0000,
-//        OF_ALIGN_VERT_TOP      = 0x0010,
-//        OF_ALIGN_VERT_BOTTOM   = 0x0020,
-//        OF_ALIGN_VERT_CENTER   = 0x0040,
-//    };
-//
-//    enum ofAlignHorz {
-//        OF_ALIGN_HORZ_IGNORE   = 0x0000,
-//        OF_ALIGN_HORZ_LEFT     = 0x0001,
-//        OF_ALIGN_HORZ_RIGHT    = 0x0002,
-//        OF_ALIGN_HORZ_CENTER   = 0x0004,
-//    };
 
     Label(const std::string& text);
 
